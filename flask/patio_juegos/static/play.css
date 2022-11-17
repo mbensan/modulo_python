@@ -1,0 +1,15 @@
+.container {
+    margin-top: 2rem;
+    width: 960px;
+}
+.cajas {
+    text-align: center;
+}
+.azul {
+    width: 5rem;
+    height: 5rem;
+    border: 2px solid black;
+    background-color: cadetblue;
+    display: inline-block;
+    margin: 2rem;
+}
