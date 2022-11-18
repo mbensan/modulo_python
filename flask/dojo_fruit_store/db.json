@@ -1,0 +1,19 @@
+{
+    "socios": [
+        {
+            "nombre": "Pedro",
+            "apellido": "Araya",
+            "id": 123456
+        },
+        {
+            "nombre": "Sole",
+            "apellido": "Valenzuela",
+            "id": "9876545678"
+        },
+        {
+            "nombre": "Michael",
+            "apellido": "Chau",
+            "id": "123432"
+        }
+    ]
+}
