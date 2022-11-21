@@ -1,0 +1,14 @@
+.mensaje {
+    background-color: bisque;
+    min-height: 5rem;
+    border: 2px solid black;
+}
+.numero {
+    background-color:  #343a3f;
+    width: 60%;
+    margin: 2rem auto;
+    border-radius: 2rem;
+}
+.numero * {
+    margin-top: 1rem;
+}
