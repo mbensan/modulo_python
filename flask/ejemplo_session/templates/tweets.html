@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block main %}
+  <div class="container">
+    <div class="row">
+      <div class="col-8">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Tweet</th>
+              <th scope="col">Autor/a</th>
+              <th scope="col">---</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for tweet in tweets %}
+              <tr>
+                <th scope="row">{{ tweet.id }}</th>
+                <td>{{ tweet.tweet }}</td>
+                <td>{{ tweet.user_name }}</td>
+                <td>---</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="col-4">
+        <div class="jumbotron">
+          <form method="POST" action="/add-tweet">
+            <h3 class="mb-3">Agrega un Tweet</h3>
+            <div class="mb-3">
+              <div class="form-floating">
+                <textarea required class="form-control" placeholder="Escribe tu tweet acá" name="tweet"></textarea>
+                <label for="floatingTextarea">Tweet</label>
+              </div>
+            </div>
+            <div class="mb-3">
+              <select name="user_id" class="form-select" aria-label="Default select example" required>
+                <option disabled selected value>Autor/a</option>
+                {% for user in users %}
+                  <option value="{{ user.id }}">{{ user.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

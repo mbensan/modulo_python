@@ -1,5 +1,8 @@
 import random
+import json
 from flask import Flask, render_template, request, redirect, session
+from models.users import User
+from models.tweets import Tweet
 
 app = Flask(__name__)
 
@@ -40,6 +43,37 @@ def guess():
         session['clase'] = 'success'
 
     return redirect('/')
+
+
+@app.route('/users')
+def users_page():
+    users = User.get_all()
+    return render_template('users.html', users=users)
+
+
+@app.route('/tweets')
+def tweets_page():
+    tweets = Tweet.get_all()
+    users = User.get_all()
+    return render_template('tweets.html', tweets=tweets, users=users)
+
+@app.route('/tweet/<id>')
+def single_tweet(id):
+    
+    tweet = Tweet.get(id)
+    
+    return json.dumps({
+        'id': tweet.id,
+        'user_name': tweet.user_name,
+        'tweet': tweet.tweet
+    })
+
+@app.route('/add-tweet', methods=['POST'])
+def add_tweet():
+    Tweet.create(request.form['tweet'], request.form['user_id'])
+    return redirect('/tweets')
+
+
 
 
 if __name__=="__main__":   
