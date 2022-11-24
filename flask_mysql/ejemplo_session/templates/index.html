@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+{% endblock %}
+
+{% block main %}
+  <section class="jumbotron text-center">
+    <div class="container">
+      <h1 class="jumbotron-heading">Adivina el número</h1>
+      <p class="lead text-muted">Escribe un número entre 1 y 100 para intentar adivinarlo</p>
+      <div class="row">
+        <div class="col-8 offset-2">
+          <div class="mensaje text-center {% if session.get('clase') %}bg-{{ session.clase }}{% endif %} ">
+            {% if session.get('clase') %}
+            
+              {% if session.clase == 'danger' %}
+                <h2>El número buscado es más grande</h2>
+              {% elif session.clase == 'primary' %}
+                <h2>El número buscado es más pequeño</h2>
+              {% else %}
+                <h2>.Ganaste!!!! El número era el {{ session.num }}</h2>
+                <div>
+                  <a href="/clear" class="btn btn-secondary">Jugar de Nuevo</a>
+                </div>
+                <p>Te tomo {{ session.intentos }} intentos</p>
+              {% endif %}
+
+            {% endif %}
+          </div>
+          <form action="/guess" method="post" class="numero text-warning text-center p-3 mt-3">
+            <h4>Take a guess</h4>
+            <input type="number" required min="1" max="100" name="intento">
+            <div>
+              <button type="submit" class="btn btn-warning">Guess</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

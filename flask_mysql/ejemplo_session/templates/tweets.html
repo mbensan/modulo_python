@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block main %}
+  <div class="container">
+    <div class="row">
+      <div class="col-8">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Tweet</th>
+              <th scope="col">Autor/a</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for tweet in tweets %}
+              <tr>
+                <th scope="row">{{ tweet.id }}</th>
+                <td>{{ tweet.tweet }}</td>
+                <td>{{ tweet.user_name }}</td>
+                <td><button data-bs-toggle="modal" data-bs-target="#modalEliminar" class="btn btn-danger" onclick="botonSi({{ tweet.id }})">Eliminar</button></td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="col-4">
+        <div class="jumbotron">
+          <form method="POST" action="/add-tweet">
+            <h3 class="mb-3">Agrega un Tweet</h3>
+            <div class="mb-3">
+              <div class="form-floating">
+                <textarea required class="form-control" placeholder="Escribe tu tweet acá" name="tweet"></textarea>
+                <label for="floatingTextarea">Tweet</label>
+              </div>
+            </div>
+            <div class="mb-3">
+              <select name="user_id" class="form-select" aria-label="Default select example" required>
+                <option disabled selected value>Autor/a</option>
+                {% for user in users %}
+                  <option value="{{ user.id }}">{{ user.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="modalEliminar" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Advertencia</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>¿Estás seguro que deseas eliminar este tweet?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <a href="#" type="button" id="si" class="btn btn-danger"> Si </a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block javascript %}
+  <script>
+    function botonSi(id) {
+      const boton = document.getElementById('si')
+      boton.setAttribute('href', '/delete-tweet/' + id)
+    }
+  </script>
+{% endblock %}
