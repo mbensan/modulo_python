@@ -27,7 +27,7 @@
       </div>
       <div class="col-4">
         <div class="jumbotron">
-          <form method="POST" action="/add-tweet">
+          <form method="POST" action="/twitter/add-tweet">
             <h3 class="mb-3">Agrega un Tweet</h3>
             <div class="mb-3">
               <div class="form-floating">
@@ -73,7 +73,7 @@
   <script>
     function botonSi(id) {
       const boton = document.getElementById('si')
-      boton.setAttribute('href', '/delete-tweet/' + id)
+      boton.setAttribute('href', '/twitter/delete-tweet/' + id)
     }
   </script>
 {% endblock %}

@@ -1,5 +1,5 @@
 from datetime import datetime
-from models.connection import connectToMySQL
+from app.models.connection import connectToMySQL
 
 class Tweet:
     
