@@ -8,18 +8,18 @@
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">Tweet</th>
-              <th scope="col">Autor/a</th>
+              <th scope="col">A la persona</th>
+              <th scope="col">le gusta</th>
               <th scope="col">Acciones</th>
             </tr>
           </thead>
           <tbody>
-            {% for tweet in tweets %}
+            {% for favorite in favorites %}
               <tr>
-                <th scope="row">{{ tweet.id }}</th>
-                <td>{{ tweet.tweet }}</td>
-                <td>{{ tweet.author.name }}</td>
-                <td><button data-bs-toggle="modal" data-bs-target="#modalEliminar" class="btn btn-danger" onclick="botonSi({{ tweet.id }})">Eliminar</button></td>
+                <th scope="row">{{ loop.index }}</th>
+                <td>{{ favorite.user.name }}</td>
+                <td>{{ favorite.book.title }}</td>
+                <td><button data-bs-toggle="modal" data-bs-target="#modalEliminar" class="btn btn-danger" onclick="botonSi({{favorite.user_id}}, {{favorite.book_id}})">Eliminar</button></td>
               </tr>
             {% endfor %}
           </tbody>
@@ -27,19 +27,21 @@
       </div>
       <div class="col-4">
         <div class="jumbotron">
-          <form method="POST" action="/twitter/add-tweet">
-            <h3 class="mb-3">Agrega un Tweet</h3>
-            <div class="mb-3">
-              <div class="form-floating">
-                <textarea required class="form-control" placeholder="Escribe tu tweet acá" name="tweet"></textarea>
-                <label for="floatingTextarea">Tweet</label>
-              </div>
-            </div>
+          <form method="POST" action="/books/add-favorite">
+            <h3 class="mb-3">Agrega un Favorito</h3>
             <div class="mb-3">
               <select name="user_id" class="form-select" aria-label="Default select example" required>
-                <option disabled selected value>Autor/a</option>
+                <option disabled selected value>Persona</option>
                 {% for user in users %}
                   <option value="{{ user.id }}">{{ user.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="mb-3">
+              <select name="book_id" class="form-select" aria-label="Default select example" required>
+                <option disabled selected value>Libro</option>
+                {% for book in books %}
+                  <option value="{{ book.id }}">{{ book.title }}</option>
                 {% endfor %}
               </select>
             </div>
@@ -71,9 +73,9 @@
 
 {% block javascript %}
   <script>
-    function botonSi(id) {
+    function botonSi(user_id, book_id) {
       const boton = document.getElementById('si')
-      boton.setAttribute('href', '/twitter/delete-tweet/' + id)
+      boton.setAttribute('href', '/books/delete-favorite/' + user_id + '/' + book_id)
     }
   </script>
 {% endblock %}

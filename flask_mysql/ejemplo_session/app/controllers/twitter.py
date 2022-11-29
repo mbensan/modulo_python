@@ -32,12 +32,12 @@ def single_tweet(id):
 @twitter.route('/add-tweet', methods=['POST'])
 def add_tweet():
     Tweet.create(request.form['tweet'], request.form['user_id'])
-    return redirect('/tweets')
+    return redirect('/twitter/tweets')
 
 
 @twitter.route('/delete-tweet/<int:id>')
 def delete_tweet(id):
     print(f'eliminando el tweet de ID {id}')
     Tweet.delete(id)
-    return redirect('/tweets')
+    return redirect('/twitter/tweets')
 
