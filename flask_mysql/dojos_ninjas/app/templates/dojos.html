@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+<style>
+  .amarillo {
+    color: darkgoldenrod;
+  }
+</style>
+{% endblock %}
+
+{% block main %}
+  <div class="container">
+    <div class="row mt-4">
+      <div class="col-4 offset-1">
+        <div class="card bg-dark  text-primary mx-auto my-5
+        ">
+          <h3 class="text-center">Ingrese un Dojo</h3>
+          <form action="/dojos" method="post">
+            <div class="form-control mb-3">
+              <input type="text" name="name">
+            </div>
+            <div class="form-control mb-3">
+              <input type="submit" class="btn btn-primary">
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-4 offset-2">
+        <div class="card bg-dark text-primary mx-auto my-5
+        ">
+          <h3 class="text-center">Dojos</h3>
+          <ul class="amarillo">
+            {% for dojo in dojos %}
+              <li>{{ dojo.name }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
