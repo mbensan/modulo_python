@@ -38,13 +38,20 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a class="nav-link disabled">Disabled</a>
+            <a class="nav-link disabled">
+              {% if session.user %}
+                Hola {{ session.user.name }}
+              {% endif %}
+            </a>
           </li>
         </ul>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+        <div class="d-flex" role="search">
+          {% if not session.user %}
+            <a href="/auth" class="btn btn-outline-primary" type="submit">Ingresar</a>
+          {% else %}
+            <a href="/logout" class="btn btn-outline-warning" type="submit">Cerrar Sesión</a>
+          {% endif %}
+        </div>
       </div>
     </div>
   </nav>
@@ -58,10 +65,10 @@
   <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
   <script src="{{ url_for('static', filename='toastr.min.js')}}"></script>
   <script>
-    {% with messages = get_flashed_messages() %} 
+    {% with messages = get_flashed_messages(with_categories=true) %} 
       {% if messages %}
-        {% for message in messages %}
-          toastr.success("{{message}}");
+        {% for category, message in messages %}
+          toastr.{{category}}("{{message}}");
         {% endfor %}
       {% endif %}
     {% endwith %}

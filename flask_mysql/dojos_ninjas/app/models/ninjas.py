@@ -20,24 +20,24 @@ class Ninja:
         # primero valido el nombre
         name = form['name'].strip()
         if name == '':
-            flash('El nombre no puede ser vacío')
+            flash('El nombre no puede ser vacío', 'error')
             is_valid = False
         elif len(name) < 3:
-            flash('El largo del nombre debe ser al menos 3')
+            flash('El largo del nombre debe ser al menos 3', 'error')
             is_valid = False
         
         # ahora valido el apellido
         last_name = form['last_name'].strip()
         if last_name == '':
-            flash('El apellido no puede ser vacío')
+            flash('El apellido no puede ser vacío', 'error')
             is_valid = False
         elif len(last_name) < 3:
-            flash('El largo del apellido debe ser al menos 3')
+            flash('El largo del apellido debe ser al menos 3', 'error')
             is_valid = False
         
         age = int(form['age'].strip())
         if age < 18:
-            flash('La edad debe ser de al menos 18 años')
+            flash('La edad debe ser de al menos 18 años', 'error')
             is_valid = False
         
         return is_valid

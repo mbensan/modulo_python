@@ -1,11 +1,12 @@
 from flask import request, redirect, render_template, Blueprint, flash
 from app.models.dojos import Dojo
 from app.models.ninjas import Ninja
+from app.models.users import User
 
 dojos = Blueprint('dojos', __name__, template_folder='templates')
 
 @dojos.route('/dojos')
-def home():
+def main_dojos():
     # llamar al modelo para recuperar los dojos
     dojos = Dojo.get_all()
     # retornamos el template
@@ -41,10 +42,11 @@ def add_ninja():
     last_name = request.form['last_name']
     age = request.form['age']
     dojo_id = request.form['dojo_id']
+
     # 2. llamamos al modelo
     Ninja.create(name, last_name, age, dojo_id)
 
     # 3. Le doy feedback al usuario
-    flash('Haz añadido un ninja correctamente')
+    flash('Haz añadido un ninja correctamente', 'success')
     
     return redirect('/ninjas')
