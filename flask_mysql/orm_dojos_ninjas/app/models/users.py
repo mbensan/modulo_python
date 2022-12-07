@@ -71,33 +71,6 @@ class User:
         # retornamos el ID del usuario recientemente creado
         return new_user_id
     
-    @classmethod
-    def change_password(cls, email, old_password, new_password, new_password_confirm):
-        # 1. Chequear que ambas contraseñas muevas coincidan
-        if new_password != new_password_confirm:
-            flash('Las contraseñas no coinciden', 'error')
-            return
-
-        # 2. Recupero el usuario con su contraseña antigua
-        user = cls.get_with_credentials(email, old_password)
-        if user is None:
-            return
-        
-        # 3. Actualizo la contraseña
-        query = '''update users set password=%(new_password)s  where email=%(email)s'''
-
-        data = {
-            'email': email,
-            'new_password': bcrypt.generate_password_hash(new_password)
-        }
-        
-        # asegúrate de llamar a la función connectToMySQL con el esquema al que te diriges
-        connectToMySQL('ninjasdojos').query_db(query, data)
-    
-        # 4. Le doy feedback al usuario
-        flash('Contraseña actualizada con éxito', 'success')
-
-    
     # ahora usamos métodos de clase para consultar nuestra base de datos
     @classmethod
     def get_with_credentials(cls, email, password):

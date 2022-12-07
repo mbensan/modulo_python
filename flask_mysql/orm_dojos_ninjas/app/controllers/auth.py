@@ -1,6 +1,5 @@
 from flask import request, redirect, render_template, Blueprint, flash, session
 from app.models.users import User
-from app.decorators import login_required
 
 auth = Blueprint('auth', __name__, template_folder='templates')
 
@@ -59,27 +58,6 @@ def login():
 
     return redirect('/')
 
-
-@auth.route('/changepwd')
-@login_required
-def change_pass():
-    return render_template('changepwd.html')
-
-
-@auth.route('/changepwd', methods=['POST'])
-def post_change_pass():
-    # 1. Recupero los datos necesarios
-    email = session['user']['email']
-    old_password = request.form['old_password']
-    new_password = request.form['new_password']
-    new_password_confirm = request.form['new_password_confirm']
-
-    # 2. Llamos al método "change_password" del modelo user
-    User.change_password(email, old_password, new_password, new_password_confirm)
-
-    # 3. Redirijo al usuario
-    return redirect('/')
-    
 
 @auth.route('/logout')
 def logout():

@@ -2,23 +2,26 @@ from flask import request, redirect, render_template, Blueprint, flash
 from app.models.dojos import Dojo
 from app.models.ninjas import Ninja
 from app.models.users import User
+import json
 
 dojos = Blueprint('dojos', __name__, template_folder='templates')
 
 @dojos.route('/dojos')
-def main_dojos():
+async def main_dojos():
     # llamar al modelo para recuperar los dojos
-    dojos = Dojo.get_all()
+    dojos = await Dojo.all()
     # retornamos el template
-    return render_template('dojos.html', dojos=dojos)
+    import pdb; pdb.set_trace()
+    return 'ok'
+    #return render_template('dojos.html', dojos=dojos)
 
 
 @dojos.route('/dojos', methods=['POST'])
-def add_dojo():
+async def add_dojo():
     # rescato los valores del formulario
     name = request.form['name']
     # llamamos al modelo
-    Dojo.create(name)
+    await Dojo.create(name=name)
 
     flash('Felicidades por añadir un dojo')
     return redirect('/dojos')
@@ -50,4 +53,3 @@ def add_ninja():
     flash('Haz añadido un ninja correctamente', 'success')
     
     return redirect('/ninjas')
-
